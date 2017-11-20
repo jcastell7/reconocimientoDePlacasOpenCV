@@ -1,10 +1,11 @@
 import numpy as np
 import cv2
 
-def preprocesamiento(rutaImagen, rutaImagenProcesada):
-    imagen=cv2.imread(rutaImagen)
+def preprocesamiento():
+    imagen=cv2.imread("3.jpg")
     rgB=np.matrix(imagen[:,:,0])
     rGb=np.matrix(imagen[:,:,1])
+    Rgb=np.matrix(imagen[:,:,2])
     img=cv2.absdiff(rGb,rgB)
     [fil,col]=img.shape
     for i in range(0,fil):
@@ -32,5 +33,7 @@ def preprocesamiento(rutaImagen, rutaImagenProcesada):
             if L[i,2]>Max[1]:
                 Max=[i,L[i,2]]
     BOX=box[Max[0],:]
+    BOX=np.array(BOX,dtype = np.uint32)
     b=imagen[BOX[1]:BOX[1]+BOX[3],BOX[0]:BOX[0]+BOX[2],:]
-    cv2.imwrite(rutaImagenProcesada,b)
+    cv2.imwrite("3 - procesada.jpg",b)
+preprocesamiento()
