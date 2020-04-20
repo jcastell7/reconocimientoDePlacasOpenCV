@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import segmentacion
-"""
+
 BW1,BOX=segmentacion.segmentacion("C:\Users\juan\My Documents\LiClipse Workspace\placas\image\procesado2.jpg")
 LETRA1=BW1[BOX[0,1]:BOX[0,1]+BOX[0,3],BOX[0,0]:BOX[0,0]+BOX[0,2]]
 LETRA2=BW1[BOX[1,1]:BOX[1,1]+BOX[1,3],BOX[1,0]:BOX[1,0]+BOX[1,2]]

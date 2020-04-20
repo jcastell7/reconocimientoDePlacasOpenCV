@@ -1,3 +1,4 @@
 Opencv/processed-plates/*.jpg
 Opencv/letras/*.jpg
 .DS_Store
+*.pyc

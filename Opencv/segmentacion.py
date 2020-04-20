@@ -1,7 +1,10 @@
 import numpy as np
 import cv2
+import os
 
-def segmentacion(rutaImagenRecortada):
+def segmentacion(imageName):
+    scriptpath = os.path.dirname(__file__)
+    rutaImagenRecortada = scriptpath+"/processed-plates/p-"+imageName
     A=cv2.imread(rutaImagenRecortada)
     [fil,col,cap]=A.shape
 
@@ -18,12 +21,12 @@ def segmentacion(rutaImagenRecortada):
         for j in range(0,col):
             MAX=max(R[i,j],G[i,j],B[i,j])
             K[i,j]=1-MAX
-    cv2.imwrite("k/k.bmp",K)
-    k=cv2.imread("k/k.bmp")
+    cv2.imwrite(scriptpath+"/black/black.bmp",K)
+    k=cv2.imread(scriptpath+"/black/black.bmp")
     BW1=cv2.Laplacian(k,cv2.CV_8UC1)
     Image=BW1[:,:,0]+BW1[:,:,1]+BW1[:,:,2]
     ret,thresh=cv2.threshold(Image,0,255,0)
-    S,contours,hierarchy=cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    contours,hierarchy=cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     cnt=contours[:]
     num=len(cnt)
     box=np.zeros((num,4))
@@ -33,7 +36,7 @@ def segmentacion(rutaImagenRecortada):
     Box=np.zeros((20,4))
     [L,A]=thresh.shape
     q=0
-    print[L,A]
+    print(L,A)
     for j in range(0,num):
         p=box[j,:]
         if p[2]>=0.095*A and p[2]<=0.15*A and p[3]>=0.46*L and p[3]<=0.67*L:
@@ -44,5 +47,4 @@ def segmentacion(rutaImagenRecortada):
     
     for i in range(0,6):
         let=img[Box[i*2,1]:Box[i*2,1]+Box[i*2,3],Box[i*2,0]:Box[i*2,0]+Box[i*2,2]]
-        cv2.imwrite("letras/"+str(i)+" - letras.jpg",let)
-segmentacion("placas procesadas/procesada 3.jpg")
+        cv2.imwrite(scriptpath+"/"+"letras/"+str(i)+"-letras.jpg",let)

@@ -17,6 +17,6 @@ def segmentacion2(ruta):
     print box
     for i in range(0,num):
         let=imagen[box[i,1]:box[i,1]+box[i,3],box[i,0]:box[i,0]+box[i,2]]
-        cv2.imwrite(str(i)+" - letras.jpg",let)
+        cv2.imwrite(str(i)+"-letras.jpg",let)
         
 segmentacion2("4 - procesada.jpg")

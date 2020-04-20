@@ -39,4 +39,3 @@ def preprocesamiento(imageName):
     BOX=np.array(BOX,dtype = np.uint32)
     b=imagen[BOX[1]:BOX[1]+BOX[3],BOX[0]:BOX[0]+BOX[2],:]
     cv2.imwrite(scriptpath+"/processed-plates/p-"+imageName,b)
-preprocesamiento("5.jpg")
