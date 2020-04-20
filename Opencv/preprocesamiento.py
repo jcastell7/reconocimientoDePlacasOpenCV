@@ -1,7 +1,10 @@
 import numpy as np
 import cv2
+import os
 
-def preprocesamiento(ruta):
+def preprocesamiento(imageName):
+    scriptpath = os.path.dirname(__file__)
+    ruta = scriptpath+"/"+imageName
     imagen=cv2.imread(ruta)
     rgB=np.matrix(imagen[:,:,0])
     rGb=np.matrix(imagen[:,:,1])
@@ -20,7 +23,7 @@ def preprocesamiento(ruta):
     se2=np.ones((10,10),np.uint8)
     closing=cv2.morphologyEx(img,cv2.MORPH_CLOSE,se)
     dilation=cv2.dilate(closing, se2,1)
-    S,contours,hierarchy=cv2.findContours(dilation,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    contours,hierarchy=cv2.findContours(dilation,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     cnt=contours[:]
     num=len(cnt)
     box=np.zeros((num,4))
@@ -35,5 +38,5 @@ def preprocesamiento(ruta):
     BOX=box[Max[0],:]
     BOX=np.array(BOX,dtype = np.uint32)
     b=imagen[BOX[1]:BOX[1]+BOX[3],BOX[0]:BOX[0]+BOX[2],:]
-    cv2.imwrite("placas procesadas/procesada "+ruta,b)
+    cv2.imwrite(scriptpath+"/processed-plates/p-"+imageName,b)
 preprocesamiento("5.jpg")
